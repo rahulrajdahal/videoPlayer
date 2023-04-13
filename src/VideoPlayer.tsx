@@ -1,12 +1,13 @@
 import { ChangeEvent, TrackHTMLAttributes, useRef, useState } from 'react';
+import useVideoPlayer from './useVideoPlayer';
 
-interface Props {
+export interface Props {
   autoPlay?: boolean;
   subtitles?: TrackHTMLAttributes<HTMLTrackElement>[];
   src: string;
 }
 
-interface VideoProps {
+export interface VideoProps {
   isPlaying: boolean;
   elapsedTime: number;
   loading: boolean;
@@ -16,88 +17,24 @@ interface VideoProps {
 }
 
 export default function VideoPlayer({ autoPlay = false, subtitles, src }: Props) {
-  const playerRef = useRef<HTMLVideoElement>(null);
-
-  const [video, setVideo] = useState<VideoProps>({
-    isPlaying: autoPlay ? true : false,
-    elapsedTime: 0,
-    loading: false,
-    volume: 0,
-    isMuted: autoPlay ? true : false,
-    isFullScreen: false,
-  });
   const playbackRates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
 
-  const player = playerRef.current;
-  const handlePause = () => {
-    if (player) {
-      player.pause();
-      setVideo((prev) => ({ ...prev, isPlaying: false }));
-    }
-  };
-  const handlePlay = () => {
-    if (player) {
-      player.play();
-      setVideo((prev) => ({ ...prev, isPlaying: true }));
-    }
-  };
-
-  const handlePlayPause = () => {
-    if (video.isPlaying) {
-      handlePause();
-    } else {
-      handlePlay();
-    }
-  };
-
-  const handlePlaybackRate = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
-
-    if (player) {
-      player.playbackRate = Number(value);
-    }
-  };
-
-  const handleOnEnded = () => setVideo((prev) => ({ ...prev, isPlaying: false }));
-
-  const handlePlayerSeek = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (player) {
-      const updatedTime = (parseInt(value) / 100) * player.duration;
-      player.currentTime = updatedTime;
-    }
-  };
-
-  const handleOnTimeUpdate = () => {
-    if (player) {
-      const elapsedTime = (player.currentTime / player.duration) * 100;
-      setVideo((prev) => ({ ...prev, elapsedTime }));
-    }
-  };
-
-  const handlePlayerVolume = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (player) {
-      const updatedVolume = parseInt(value);
-      player.volume = updatedVolume / 100;
-      setVideo((prev) => ({ ...prev, volume: updatedVolume }));
-    }
-  };
-
-  const handleMuteOnClick = () => {
-    if (video.isMuted) {
-      setVideo((prev) => ({ ...prev, isMuted: false }));
-    } else {
-      setVideo((prev) => ({ ...prev, isMuted: true }));
-    }
-  };
-
-  const handleFullScreen = () => {
-    if (player) {
-      player.requestFullscreen();
-      setVideo((prev) => ({ ...prev, isFullScreen: true }));
-    }
-  };
+  const {
+    playerRef,
+    handleFullScreen,
+    video,
+    setVideo,
+    handleMuteOnClick,
+    handleOnEnded,
+    handleOnTimeUpdate,
+    handlePlayPause,
+    handlePlaybackRate,
+    handlePlayerSeek,
+    handlePlayerVolume,
+    handleOnLoadedData,
+  } = useVideoPlayer({
+    options: { autoPlay, src },
+  });
 
   return (
     <div>
@@ -108,11 +45,7 @@ export default function VideoPlayer({ autoPlay = false, subtitles, src }: Props)
         autoPlay={autoPlay}
         onEnded={handleOnEnded}
         onTimeUpdate={handleOnTimeUpdate}
-        onLoadedData={() => {
-          setVideo((prev) => ({ ...prev, isPlaying: autoPlay }));
-          setVideo((prev) => ({ ...prev, loading: false }));
-          setVideo((prev) => ({ ...prev, volume: 50 }));
-        }}
+        onLoadedData={handleOnLoadedData}
         muted={video.isMuted}
       >
         <source src={src} />

@@ -1,6 +1,5 @@
 {
-  "name": "videoplayer",
-  "private": true,
+  "name": "@rahulrajdahal/videoplayer",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -16,6 +15,18 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/video-player.umd.js",
+  "module": "./dist/video-player.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/video-player.es.js",
+      "require": "./dist/video-player.umd.js"
+    }
   },
   "dependencies": {
     "react": "^18.2.0",
