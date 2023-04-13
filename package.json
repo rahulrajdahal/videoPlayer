@@ -11,7 +11,8 @@
     "lint:fix": "yarn lint -- --fix",
     "prettier": "npx prettier src --check",
     "prettier:fix": "yarn prettier -- --write",
-    "format": "yarn prettier:fix && yarn lint:fix"
+    "format": "yarn prettier:fix && yarn lint:fix",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
