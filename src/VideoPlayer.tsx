@@ -1,4 +1,4 @@
-import { ChangeEvent, TrackHTMLAttributes, useRef, useState } from 'react';
+import { TrackHTMLAttributes } from 'react';
 import useVideoPlayer from './useVideoPlayer';
 
 export interface Props {
