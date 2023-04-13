@@ -1,3 +1,5 @@
+import VideoPlayer from './VideoPlayer';
+
 export default function App() {
-  return <div>App</div>;
+  return <VideoPlayer src='https://www.dofactory.com/media/movie.mp4' />;
 }

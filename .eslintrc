@@ -36,6 +36,7 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ],
+    "object-shorthand": ["error", "always"],
 
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
