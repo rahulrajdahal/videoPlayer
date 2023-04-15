@@ -1,13 +1,11 @@
 {
   "name": "custom-react-videoplayer",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/rahulrajdahal/videoPlayer.git"
   },
-  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -17,10 +15,10 @@
     "prettier": "npx prettier src --check",
     "prettier:fix": "yarn prettier -- --write",
     "format": "yarn prettier:fix && yarn lint:fix",
-    "postinstall": "husky install",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "postinstall": "node ./prepare.cjs"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -54,5 +52,6 @@
     "vite-plugin-dts": "^2.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.30.1"
-  }
+  },
+  "license": "MIT"
 }
