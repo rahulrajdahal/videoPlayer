@@ -18,9 +18,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "postinstall": "husky install",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable"
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
