@@ -1,6 +1,6 @@
 {
   "name": "custom-react-videoplayer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "repository": {
     "type": "git",
@@ -15,10 +15,12 @@
     "prettier": "npx prettier src --check",
     "prettier:fix": "yarn prettier -- --write",
     "format": "yarn prettier:fix && yarn lint:fix",
-    "postinstall": "husky install",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "postinstall": "husky install",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
   },
   "dependencies": {
     "react": "^18.2.0",
